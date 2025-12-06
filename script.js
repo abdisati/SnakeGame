@@ -49,3 +49,62 @@ function draw(){
 }
 
 draw();
+
+function move(){
+    const head = {...snake[0]};
+
+    if(direction==="UP") head.y--;
+    if(direction==="DOWN") head.y++;
+    if(direction==="LEFT") head.x--;
+    if(direction==="RIGHT") head.x++;
+
+    //wall collision
+    if(head.x<0 || head.x>=size || head.y<0 || head.y>=size){
+        clearInterval(gameInterval);
+        alert("Game Over!");
+        return;
+    }
+
+    //add it to the snake array
+    snake.unshift(head);
+
+    //if food eaten
+    if(head.x===food.x&&head.y===food.y){
+        score++; //increment score
+        //display the score
+        scoreEl.textContent="Score: "+score;
+        placeFood();
+    } else{
+        snake.pop();
+    }
+
+    draw();
+}
+
+function placeFood(){
+    food.x=Math.floor(Math.random()*size);
+    food.y=Math.floor(Math.random()*size);
+}
+
+//keyboard controls
+document.addEventListener("keydown", e=>{
+    if(e.key==="ArrowUp") direction ="UP";
+    if(e.key==="ArrowDown") direction="DOWN";
+    if(e.key==="ArrowLeft") direction ="LEFT";
+    if(e.key==="ArrowRight") direction="RIGHT";
+});
+
+//start button logic
+startBtn.addEventListener("click",()=>{
+    clearInterval(gameInterval);
+    createGrid();
+
+    snake=[{x:10,y:10}];
+    direction="RIGHT";
+    score=0;
+    scoreEl.textContent="Score: 0";
+    placeFood();
+    draw();
+
+    gameInterval=setInterval(move,200);
+});
