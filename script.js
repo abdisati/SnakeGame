@@ -61,7 +61,7 @@ function move(){
     //wall collision
     if(head.x<0 || head.x>=size || head.y<0 || head.y>=size){
         clearInterval(gameInterval);
-        alert("Game Over!");
+        alert(`Game Over! Score: ${score}`);
         return;
     }
 
@@ -88,10 +88,10 @@ function placeFood(){
 
 //keyboard controls
 document.addEventListener("keydown", e=>{
-    if(e.key==="ArrowUp") direction ="UP";
-    if(e.key==="ArrowDown") direction="DOWN";
-    if(e.key==="ArrowLeft") direction ="LEFT";
-    if(e.key==="ArrowRight") direction="RIGHT";
+    if(e.key==="ArrowUp"&&direction!=="DOWN") direction ="UP";
+    if(e.key==="ArrowDown"&&direction!=="UP") direction="DOWN";
+    if(e.key==="ArrowLeft"&&direction!=="RIGHT") direction ="LEFT";
+    if(e.key==="ArrowRight"&&direction!=="LEFT") direction="RIGHT";
 });
 
 //start button logic
