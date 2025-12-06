@@ -65,6 +65,15 @@ function move(){
         return;
     }
 
+    //check self-collision
+    for(let i=1;i<snake.length;i++){
+        if(head.x===snake[i].x && head.y===snake[i].y){
+            clearInterval(gameInterval);
+            alert(`Game Over! You ran into yourself! Score:${score}`);
+            return;
+        }
+    }
+
     //add it to the snake array
     snake.unshift(head);
 
