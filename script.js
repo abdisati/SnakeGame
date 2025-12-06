@@ -1,9 +1,12 @@
+let highScore=localStorage.getItem("highScore") || 0;
+
 const board=document.getElementById("game-board");
 const scoreEl=document.getElementById("score");
 const startBtn=document.getElementById("start-btn");
 
 const size = 20; //20x20 grid
 let cells=[];
+
 
 function createGrid(){
     board.innerHTML="";
@@ -82,6 +85,14 @@ function move(){
         score++; //increment score
         //display the score
         scoreEl.textContent="Score: "+score;
+
+        //check and update high score
+        if(score>highScore){
+            highScore=score; //update the score
+            localStorage.setItem("highScore",highScore);
+            //update the highscore div
+            document.getElementById("high-score").textContent=`High Score: ${highScore}`;
+        }
         placeFood();
     } else{
         snake.pop();
